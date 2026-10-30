@@ -1,0 +1,212 @@
+'use client';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import {
+  type ContactFormValues,
+  contactReasons,
+  contactSchema,
+} from '@/lib/contact-schema';
+
+type FormStatus = 'idle' | 'success' | 'error';
+
+export const ContactForm = () => {
+  const [status, setStatus] = useState<FormStatus>('idle');
+  const [serverError, setServerError] = useState<string | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<ContactFormValues>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      reason: undefined,
+      message: '',
+      website: '',
+    },
+  });
+
+  const onSubmit = async (values: ContactFormValues) => {
+    setServerError(null);
+    setStatus('idle');
+
+    try {
+      const response = await fetch('/.netlify/functions/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+
+      const data = (await response.json().catch(() => null)) as {
+        success?: boolean;
+        error?: string;
+      } | null;
+
+      if (!response.ok || !data?.success) {
+        setStatus('error');
+        setServerError(
+          data?.error ||
+            'Algo salió mal al enviar tu mensaje. Por favor intenta de nuevo o escríbeme directamente.',
+        );
+        return;
+      }
+
+      reset();
+      setStatus('success');
+    } catch {
+      setStatus('error');
+      setServerError(
+        'Algo salió mal al enviar tu mensaje. Por favor intenta de nuevo o escríbeme directamente.',
+      );
+    }
+  };
+
+  if (status === 'success') {
+    return (
+      <div className="contact-success" role="status" aria-live="polite">
+        <p className="contact-success-title">✓ Mensaje enviado</p>
+        <p className="contact-success-copy">
+          Gracias por contactarme. Te responderé lo antes posible.
+        </p>
+        <button
+          type="button"
+          className="contact-secondary-button"
+          onClick={() => setStatus('idle')}
+        >
+          Enviar otro mensaje
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <form className="contact-form" onSubmit={handleSubmit(onSubmit)} noValidate>
+      <div className="contact-field">
+        <label htmlFor="contact-name">Nombre</label>
+        <input
+          id="contact-name"
+          type="text"
+          autoComplete="name"
+          aria-invalid={errors.name ? 'true' : 'false'}
+          aria-describedby={errors.name ? 'contact-name-error' : undefined}
+          {...register('name')}
+        />
+        {errors.name ? (
+          <p
+            id="contact-name-error"
+            className="contact-field-error"
+            role="alert"
+          >
+            {errors.name.message}
+          </p>
+        ) : null}
+      </div>
+
+      <div className="contact-field">
+        <label htmlFor="contact-email">Correo electrónico</label>
+        <input
+          id="contact-email"
+          type="email"
+          autoComplete="email"
+          aria-invalid={errors.email ? 'true' : 'false'}
+          aria-describedby={errors.email ? 'contact-email-error' : undefined}
+          {...register('email')}
+        />
+        {errors.email ? (
+          <p
+            id="contact-email-error"
+            className="contact-field-error"
+            role="alert"
+          >
+            {errors.email.message}
+          </p>
+        ) : null}
+      </div>
+
+      <div className="contact-field">
+        <label htmlFor="contact-reason">Motivo del contacto</label>
+        <select
+          id="contact-reason"
+          aria-invalid={errors.reason ? 'true' : 'false'}
+          aria-describedby={errors.reason ? 'contact-reason-error' : undefined}
+          defaultValue=""
+          {...register('reason')}
+        >
+          <option value="" disabled>
+            Selecciona un motivo
+          </option>
+          {contactReasons.map((reason) => (
+            <option key={reason.value} value={reason.value}>
+              {reason.label}
+            </option>
+          ))}
+        </select>
+        {errors.reason ? (
+          <p
+            id="contact-reason-error"
+            className="contact-field-error"
+            role="alert"
+          >
+            {errors.reason.message}
+          </p>
+        ) : null}
+      </div>
+
+      <div className="contact-field">
+        <label htmlFor="contact-message">Mensaje</label>
+        <textarea
+          id="contact-message"
+          rows={6}
+          aria-invalid={errors.message ? 'true' : 'false'}
+          aria-describedby={
+            errors.message ? 'contact-message-error' : undefined
+          }
+          {...register('message')}
+        />
+        {errors.message ? (
+          <p
+            id="contact-message-error"
+            className="contact-field-error"
+            role="alert"
+          >
+            {errors.message.message}
+          </p>
+        ) : null}
+      </div>
+
+      <div className="contact-honeypot" aria-hidden="true">
+        <label htmlFor="contact-website">Sitio web</label>
+        <input
+          id="contact-website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          {...register('website')}
+        />
+      </div>
+
+      {status === 'error' && serverError ? (
+        <p className="contact-form-error" role="alert">
+          {serverError}
+        </p>
+      ) : null}
+
+      <button
+        type="submit"
+        className="contact-submit-button"
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? 'Enviando...' : 'Enviar mensaje →'}
+      </button>
+    </form>
+  );
+};
+
+export default ContactForm;
