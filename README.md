@@ -1,32 +1,20 @@
-# Portfolio website
+# Portafolio Profesional - Alisson Paredes
 
-The hero is a switchable scene engine, fully animated, with moving vehicles, ambient lighting, and day/night themes.
+Portafolio web personal desarrollado en Next.js. Diseñado para presentar mis proyectos, stack tecnológico y experiencia como estudiante de Ingeniería de Software en la Universidad Técnica de Ambato (UTA).
 
-![London hero — day](./img/london-hero-day.png 'London hero — day')
+🌍 **Despliegues en vivo:**
+* **Versión Estática (Principal):** [https://bethrmz13.github.io/portafolio-beth](https://bethrmz13.github.io/portafolio-beth) (GitHub Pages)
+* **Versión Dinámica:** [https://portafolio-beth.vercel.app/] (Vercel)
 
-![London hero — night](./img/london-hero-night.png 'London hero — night')
+## 👩‍💻 Sobre mí
+Estudiante de cuarto semestre de Ingeniería de Software (FISEI - UTA). Enfocada en el desarrollo Backend, gestión de bases de datos y arquitectura de sistemas. Miembro del equipo de programación competitiva **Kernel Panic** y colaboradora en proyectos de software académico como **MoviPass**.
 
-## Getting started
+## 🛠️ Stack Tecnológico Principal
+* **Lenguajes:** Java, C++, Python, SQL, TypeScript
+* **Bases de Datos & Backend:** PostgreSQL, MySQL, Oracle SQL, Supabase
+* **Herramientas & Entornos:** Git/GitHub, VS Code, Eclipse, LaTeX, Packet Tracer, Wireshark
 
-This repo uses **pnpm**. See `AGENTS.md` for stack, testing, and contribution rules.
-
-```shell
-pnpm install
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000).
-
-Copy `.env.example` to `.env.local` and set `RESEND_API_KEY` if you need the contact form to send mail locally.
-
-## Scripts
-
-| Command | What it does |
-| --- | --- |
-| `pnpm dev` | Next.js dev server |
-| `pnpm build` | Production build |
-| `pnpm start` | Serve the production build |
-| `pnpm lint` | Biome check |
-| `pnpm typecheck` | TypeScript `--noEmit` |
-| `pnpm test` | Vitest unit / component tests |
-| `pnpm test:e2e` | Playwright smokes |
+## ⚙️ Arquitectura y Despliegue
+Este proyecto fue adaptado de una plantilla de Next.js y mantiene dos entornos de despliegue activos:
+* **GitHub Pages (Estático):** Flujo de CI/CD automatizado con **GitHub Actions** (`nextjs.yml`) para compilar una versión 100% estática (`output: 'export'`) descartando rutas de servidor.
+* **Vercel (Dinámico):** Despliegue alternativo que conserva la capacidad original de procesamiento SSR (Server-Side Rendering) y las rutas de API completas.
