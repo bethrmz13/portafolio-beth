@@ -4,55 +4,53 @@ import SupportWidget from './components/SupportWidget/SupportWidget';
 import ThemeContextProvider from './context/ThemeContext';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://andrewbaisden.com'),
+  metadataBase: new URL('https://bethrmz13.github.io'),
   alternates: {
-    canonical: '/',
+    canonical: '/portafolio-beth',
   },
   title: {
-    default: 'Andrew Baisden | Full-Stack Software Engineer',
-    template: '%s | Andrew Baisden',
+    default: 'Alisson Paredes | Ingeniería de Software',
+    template: '%s | Alisson Paredes',
   },
   description:
-    'Full-stack software engineer based in London, building modern web applications with TypeScript, React, Next.js, Node.js and PostgreSQL. Explore my projects and work.',
+    'Portafolio de Alisson Paredes, estudiante de Ingeniería de Software en la Universidad Técnica de Ambato (UTA). Proyectos en Java, C++, Python, SQL y desarrollo backend.',
   keywords: [
-    'Andrew Baisden',
+    'Alisson Paredes',
+    'Ali Paredes',
+    'Ingeniería de Software',
     'Software Engineer',
-    'Full-Stack Software Engineer',
-    'Full-Stack Developer',
-    'Software Engineer London',
-    'TypeScript Developer',
-    'React Developer',
-    'Next.js Developer',
-    'Node.js Developer',
-    'TypeScript',
-    'React',
-    'Next.js',
-    'Node.js',
-    'PostgreSQL',
-    'Web Application Development',
+    'UTA',
+    'Universidad Técnica de Ambato',
+    'Backend',
+    'Java',
+    'C++',
+    'Python',
+    'SQL',
+    'Kernel Panic',
+    'Ecuador'
   ],
   authors: [
     {
-      name: 'Andrew Baisden',
-      url: 'https://andrewbaisden.com',
+      name: 'Alisson Paredes',
+      url: 'https://bethrmz13.github.io/portafolio-beth',
     },
   ],
-  creator: 'Andrew Baisden',
-  publisher: 'Andrew Baisden',
+  creator: 'Alisson Paredes',
+  publisher: 'Alisson Paredes',
   openGraph: {
     type: 'website',
-    locale: 'en_GB',
-    url: 'https://andrewbaisden.com',
-    siteName: 'Andrew Baisden',
-    title: 'Andrew Baisden | Full-Stack Software Engineer',
+    locale: 'es_EC',
+    url: 'https://bethrmz13.github.io/portafolio-beth',
+    siteName: 'Portafolio de Alisson Paredes',
+    title: 'Alisson Paredes | Ingeniería de Software',
     description:
-      'Full-stack software engineer based in London, building modern web applications with TypeScript, React, Next.js, Node.js and PostgreSQL.',
+      'Portafolio de Alisson Paredes, estudiante de Ingeniería de Software en la Universidad Técnica de Ambato (UTA).',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Andrew Baisden | Full-Stack Software Engineer',
+    title: 'Alisson Paredes | Ingeniería de Software',
     description:
-      'Full-stack software engineer based in London, building modern web applications with TypeScript, React, Next.js, Node.js and PostgreSQL.',
+      'Portafolio de Alisson Paredes, estudiante de Ingeniería de Software en la Universidad Técnica de Ambato (UTA).',
   },
   robots: {
     index: true,
@@ -70,7 +68,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="es" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
